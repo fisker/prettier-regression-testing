@@ -129,6 +129,17 @@ export async function runPrettier(
     }
   }
 
+  // Add extra space before context lines to distinguish from markdown list items
+  // Context lines in unified diff start with a single space
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    if (
+      lines[lineIndex].startsWith(" ") &&
+      !lines[lineIndex].startsWith("  ")
+    ) {
+      lines[lineIndex] = " " + lines[lineIndex];
+    }
+  }
+
   diff = lines.join("\n");
 
   if (diff) {
